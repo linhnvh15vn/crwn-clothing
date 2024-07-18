@@ -1,9 +1,8 @@
 import React from 'react';
+import CategoryContainer from './components/category-container';
 
-interface Props {
-  // Add your component props here
-}
+import categories from './dev-data/categories.json';
 
-export default function App(props: Props) {
-  return <div>{/* Add your component content here */}</div>;
+export default function App() {
+  return <CategoryContainer categories={categories} />;
 }
