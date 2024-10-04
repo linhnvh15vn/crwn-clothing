@@ -1,10 +1,8 @@
-import React from 'react';
-
 import classNames from 'classnames/bind';
 
-import CategoryItem from '../category-item';
-
 import styles from './category-container.module.scss';
+
+import CategoryItem from '@/components/category-item';
 
 const cx = classNames.bind(styles);
 

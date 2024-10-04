@@ -18,7 +18,7 @@ export default function Navigation() {
         <Link className={cx('nav-link')} to="/contact">
           CONTACT
         </Link>
-        <Link className={cx('nav-link')} to="/auth">
+        <Link className={cx('nav-link')} to="/authentication">
           LOGIN
         </Link>
       </div>
