@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type FormEvent, useState } from 'react';
 
 import classNames from 'classnames/bind';
 
@@ -6,6 +6,10 @@ import styles from './sign-up.module.scss';
 
 import Button from '@/components/button';
 import Input from '@/components/input';
+import {
+  _createUserWithEmailAndPassword,
+  createUserDocument,
+} from '@/utils/firebase';
 
 const cx = classNames.bind(styles);
 
@@ -31,11 +35,28 @@ export default function SignUp() {
     setFormValue({ ...formValue, [name]: value });
   };
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formValue.password !== !formValue.confirmPassword) {
+      alert('');
+    }
+    const response = await _createUserWithEmailAndPassword(
+      formValue.email,
+      formValue.password,
+    );
+    if (response) {
+      await createUserDocument(response?.user, {
+        displayName: formValue.displayName,
+      });
+    }
+  };
+
   return (
     <main className={cx('sign-up-container')}>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           label="Display Name"
           type="text"

@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom';
 
 import styles from './navigation.module.scss';
 
+import { useUserStore } from '@/stores/user.store';
+
 const cx = classNames.bind(styles);
 
 export default function Navigation() {
+  const { user } = useUserStore();
+
+  console.log(user);
+
   return (
     <div className={cx('navigation')}>
       <Link className={cx('logo-container')} to="/">
@@ -18,9 +24,15 @@ export default function Navigation() {
         <Link className={cx('nav-link')} to="/contact">
           CONTACT
         </Link>
-        <Link className={cx('nav-link')} to="/authentication">
-          LOGIN
-        </Link>
+        {user ? (
+          <div className={cx('nav-link')}>
+            <span>{user.displayName?.toUpperCase()}</span>
+          </div>
+        ) : (
+          <Link className={cx('nav-link')} to="/authentication">
+            LOGIN
+          </Link>
+        )}
       </div>
     </div>
   );

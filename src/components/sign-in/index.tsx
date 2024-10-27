@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type FormEvent, useState } from 'react';
 
 import classNames from 'classnames/bind';
 
@@ -6,7 +6,12 @@ import styles from './sign-in.module.scss';
 
 import Button from '@/components/button';
 import Input from '@/components/input';
-import { createUserDocument, signInWithGooglePopup } from '@/utils/firebase';
+import { useUserStore } from '@/stores/user.store';
+import {
+  _signInWithEmailAndPassword,
+  createUserDocument,
+  signInWithGooglePopup,
+} from '@/utils/firebase';
 
 const cx = classNames.bind(styles);
 
@@ -21,28 +26,43 @@ const defaultValues: FormValue = {
 };
 
 export default function SignIn() {
-  const [formFields, setFormFields] = useState<FormValue>(defaultValues);
+  const { setUser } = useUserStore();
+  const [formValue, setFormValue] = useState<FormValue>(defaultValues);
 
   const logUserGoogle = async () => {
     const { user } = await signInWithGooglePopup();
-    const userDocRef = await createUserDocument(user);
+    await createUserDocument(user);
+
+    setUser(user);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormFields({ ...formFields, [name]: value });
+    setFormValue({ ...formValue, [name]: value });
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const response = await _signInWithEmailAndPassword(
+      formValue.email,
+      formValue.password,
+    );
+    if (response) {
+      setUser(response.user);
+    }
   };
 
   return (
     <main className={cx('sign-in-container')}>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           label="Email"
           type="email"
           name="email"
-          value={formFields.email}
+          value={formValue.email}
           required
           onChange={handleChange}
         />
@@ -50,19 +70,18 @@ export default function SignIn() {
           label="Password"
           type="password"
           name="password"
-          value={formFields.password}
+          value={formValue.password}
           required
           onChange={handleChange}
         />
+
+        <div className={cx('buttons-container')}>
+          <Button type="submit">Log in</Button>
+          <Button type="button" google onClick={logUserGoogle}>
+            Sign in with Google
+          </Button>
+        </div>
       </form>
-      <div className={cx('buttons-container')}>
-        <Button type="button" onClick={logUserGoogle}>
-          Log in
-        </Button>
-        <Button type="button" google onClick={logUserGoogle}>
-          Sign in with Google
-        </Button>
-      </div>
     </main>
   );
 }
