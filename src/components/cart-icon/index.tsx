@@ -8,7 +8,7 @@ import { useCartStore } from '@/stores/cart.store';
 const cx = classNames.bind(styles);
 
 export default function CartIcon() {
-  const { toggleCartDropdown } = useCartStore();
+  const { getCartCount, toggleCartDropdown } = useCartStore();
 
   return (
     <div className={cx('cart-icon-container')} onClick={toggleCartDropdown}>
@@ -17,6 +17,7 @@ export default function CartIcon() {
         alt="shopping-bag-icon"
         className={cx('shopping-icon')}
       />
+      <span className={cx('item-count')}>{getCartCount()}</span>
     </div>
   );
 }

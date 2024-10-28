@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 
 import Authentication from '@/pages/authentication';
+import Checkout from '@/pages/checkout';
 import Home from '@/pages/home';
 import Shop from '@/pages/shop';
 
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: '/shop',
         element: <Shop />,
+      },
+      {
+        path: '/checkout',
+        element: <Checkout />,
       },
     ],
   },
