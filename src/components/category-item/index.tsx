@@ -3,13 +3,16 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './category-item.module.scss';
 
+import { type Category } from '@/interfaces/category.interface';
+
 interface Props {
-  category: any;
+  category: Category;
 }
 
 const cx = classNames.bind(styles);
 
-export default function CategoryItem({ category: { title, imageUrl } }: Props) {
+export default function CategoryItem({ category }: Props) {
+  const { title, imageUrl } = category;
   const navigate = useNavigate();
 
   return (

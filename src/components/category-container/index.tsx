@@ -3,11 +3,12 @@ import classNames from 'classnames/bind';
 import styles from './category-container.module.scss';
 
 import CategoryItem from '@/components/category-item';
+import { type Category } from '@/interfaces/category.interface';
 
 const cx = classNames.bind(styles);
 
 interface Props {
-  categories: any[];
+  categories: Category[];
 }
 
 export default function CategoryContainer({ categories }: Props) {
