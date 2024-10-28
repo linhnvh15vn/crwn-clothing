@@ -1,13 +1,17 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 
-import App from './App';
+import {
+  createBrowserRouter,
+  RouterProvider as RemixRouterProvider,
+} from 'react-router-dom';
 
-import Authentication from '@/pages/authentication';
-import Checkout from '@/pages/checkout';
-import Home from '@/pages/home';
-import Shop from '@/pages/shop';
+const App = lazy(() => import('@/App'));
+const Home = lazy(() => import('@/pages/home'));
+const Authentication = lazy(() => import('@/pages/authentication'));
+const Shop = lazy(() => import('@/pages/shop/'));
+const Checkout = lazy(() => import('@/pages/checkout'));
 
-export const router = createBrowserRouter([
+const routes = createBrowserRouter([
   {
     path: '/',
     element: <App />,
@@ -31,3 +35,11 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+
+export function RouterProvider() {
+  return (
+    <Suspense>
+      <RemixRouterProvider router={routes} />
+    </Suspense>
+  );
+}
