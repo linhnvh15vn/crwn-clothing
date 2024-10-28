@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 
 import styles from './navigation.module.scss';
 
+import CartDropdown from '@/components/cart-dropdown';
+import CartIcon from '@/components/cart-icon';
+import { useCartStore } from '@/stores/cart.store';
 import { useUserStore } from '@/stores/user.store';
 
 const cx = classNames.bind(styles);
 
 export default function Navigation() {
   const { user } = useUserStore();
-
-  console.log(user);
+  const { isCartOpen } = useCartStore();
 
   return (
     <div className={cx('navigation')}>
@@ -33,7 +35,10 @@ export default function Navigation() {
             LOGIN
           </Link>
         )}
+        <CartIcon />
       </div>
+
+      {isCartOpen && <CartDropdown />}
     </div>
   );
 }

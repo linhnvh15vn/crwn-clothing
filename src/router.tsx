@@ -4,6 +4,7 @@ import App from './App';
 
 import Authentication from '@/pages/authentication';
 import Home from '@/pages/home';
+import Shop from '@/pages/shop';
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: '/authentication',
         element: <Authentication />,
+      },
+      {
+        path: '/shop',
+        element: <Shop />,
       },
     ],
   },
