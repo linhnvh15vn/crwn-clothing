@@ -5,6 +5,8 @@ import {
   RouterProvider as RemixRouterProvider,
 } from 'react-router-dom';
 
+const Category = lazy(() => import('@/pages/category'));
+const Preview = lazy(() => import('@/pages/preview'));
 const App = lazy(() => import('@/App'));
 const Home = lazy(() => import('@/pages/home'));
 const Authentication = lazy(() => import('@/pages/authentication'));
@@ -27,6 +29,16 @@ const routes = createBrowserRouter([
       {
         path: '/shop',
         element: <Shop />,
+        children: [
+          {
+            index: true,
+            element: <Preview />,
+          },
+          {
+            path: '/shop/:category',
+            element: <Category />,
+          },
+        ],
       },
       {
         path: '/checkout',
