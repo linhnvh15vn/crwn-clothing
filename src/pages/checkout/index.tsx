@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './checkout.module.scss';
 
 import CheckoutItem from '@/components/checkout-item';
+import PaymentForm from '@/components/payment-form';
 import { useCartStore } from '@/stores/cart.store';
 
 const cx = classNames.bind(styles);
@@ -33,6 +34,7 @@ export default function Checkout() {
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
       <div className={cx('total')}>TOTAL: ${getCartTotal()}</div>
+      <PaymentForm />
     </div>
   );
 }
